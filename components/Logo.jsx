@@ -10,7 +10,7 @@ export default function Logo({ size = 19 }) {
           </linearGradient>
         </defs>
       </svg>
-      Trine
+      Cosmix
     </a>
   );
 }
