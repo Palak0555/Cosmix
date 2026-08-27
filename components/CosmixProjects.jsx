@@ -3,99 +3,333 @@
 import { useState } from "react";
 import ProjectCard from "./ProjectCard";
 import LivmetroDetails from "./LivmetroDetails";
+import MarketIntelligenceDetails from "./MarketIntelligenceDetails";
+import InterviewAIDetails from "./InterviewAIDetails";
 
 const projects = [
   {
     id: "livmetro",
     category: "Real Estate",
-    title: "Livmetro",
-    tagline: "Interior design packages engineered for new-home buyers.",
+    title: "REAL ESTATE",
+    tagline:
+      "Interior design packages engineered for new-home buyers.",
     status: "Live",
-    specs: ["2,400 SQFT", "94% OCCUPANCY", "6WK DELIVERY"],
+    specs: [
+      "2,400 SQFT",
+      "94% OCCUPANCY",
+      "6WK DELIVERY",
+    ],
     metric: "+18% YOY",
+    visual: "real-estate",
   },
-  // add more projects here — grid and card scale automatically
+
+  {
+    id: "market-intelligence",
+    category: "AI / FINANCE",
+    title: "MARKET INTELLIGENCE",
+    tagline:
+      "AI-powered sentiment analysis and market prediction system built to turn financial noise into actionable signals.",
+    status: "Built",
+    specs: [
+      "REACT",
+      "PYTHON + ML",
+      "YAHOO FINANCE",
+    ],
+    metric: "AI SIGNALS",
+    visual: "market",
+  },
+
+  {
+    id: "interview-ai",
+    category: "ANDROID / AI",
+    title: "ANDROID APPLICATION",
+    tagline:
+      "An AI interview coach that turns practice into measurable progress.",
+    status: "Built",
+    specs: [
+      "KOTLIN",
+      "JETPACK COMPOSE",
+      "GEMINI AI",
+    ],
+    metric: "AI COACH",
+    visual: "android",
+  },
 ];
 
 export default function CosmixProjects() {
   const [selectedProject, setSelectedProject] = useState(null);
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#08090b] py-24 md:py-32">
-      {/* ambient drifting gradient orbs */}
-      <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="orb orb-teal absolute -left-32 top-0 h-[420px] w-[420px] rounded-full bg-[#2dd4bf] opacity-[0.10] blur-[120px]" />
-        <div className="orb orb-grey absolute -right-10 bottom-0 h-[380px] w-[380px] rounded-full bg-[#3a3f47] opacity-[0.35] blur-[120px]" />
+    <section
+      id="projects"
+      className="relative w-full overflow-hidden bg-[#020807] py-20 text-white md:py-24"
+      style={{ fontFamily: "'Montserrat', sans-serif" }}
+    >
+      {/* =====================================================
+          AMBIENT BACKGROUND
+      ===================================================== */}
+
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+      >
+        {/* Primary teal atmosphere */}
+        <div
+          className="projects-glow projects-glow-primary absolute -left-[180px] top-[-180px] h-[620px] w-[620px] rounded-full blur-[150px]"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(45,217,195,0.105) 0%, rgba(45,217,195,0.035) 42%, transparent 72%)",
+          }}
+        />
+
+        {/* Secondary atmosphere */}
+        <div
+          className="projects-glow projects-glow-secondary absolute -right-[180px] bottom-[-180px] h-[600px] w-[600px] rounded-full blur-[160px]"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(45,217,195,0.065) 0%, rgba(40,45,50,0.14) 42%, transparent 72%)",
+          }}
+        />
+
+        {/* Subtle central depth */}
+        <div
+          className="absolute left-1/2 top-[48%] h-[520px] w-[760px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[190px]"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(45,217,195,0.018), transparent 68%)",
+          }}
+        />
       </div>
 
-      {/* faint blueprint grid */}
+      {/* =====================================================
+          BACKGROUND GRID
+      ===================================================== */}
+
       <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.022]"
         style={{
           backgroundImage:
-            "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-          backgroundSize: "56px 56px",
+            "linear-gradient(rgba(255,255,255,0.75) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.75) 1px, transparent 1px)",
+          backgroundSize: "64px 64px",
         }}
       />
 
+      {/* =====================================================
+          CONTENT
+      ===================================================== */}
+
       <div className="relative mx-auto w-[min(1200px,calc(100%-40px))]">
-        <header className="mb-14 md:mb-16">
-          <div className="mb-5 flex items-center gap-2 font-mono text-[11px] tracking-[0.14em] text-[#2dd4bf]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#2dd4bf]" />
-            SELECTED WORK
+
+        {/* =====================================================
+            SECTION HEADER
+        ===================================================== */}
+
+        <header className="projects-header mb-12 md:mb-14">
+          {/* Eyebrow */}
+
+          <div className="projects-eyebrow mb-5">
+            <span
+              aria-hidden="true"
+              className="h-[6px] w-[6px] shrink-0 rounded-full bg-[#2dd4bf] shadow-[0_0_10px_rgba(45,212,191,0.65)]"
+            />
+
+            <span>SELECTED WORK</span>
           </div>
 
-          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <h2 className="max-w-[760px] text-[42px] font-medium leading-[0.98] tracking-[-0.045em] text-[#f5f6f7] md:text-[56px]">
-              Systems built to move
-              <span className="text-[#6b7078]"> business forward.</span>
+          {/* Heading */}
+
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <h2 className="projects-heading max-w-[850px]">
+              Systems built to move{" "}
+              <span>business forward</span>
             </h2>
-
-            <p className="max-w-[200px] pb-1 text-sm leading-[1.5] text-[#8b8f98]">
-              Explore what we've engineered.
-            </p>
           </div>
+
+          {/* Supporting divider */}
+
+          <div className="projects-divider mt-8" />
         </header>
 
+        {/* =====================================================
+            PROJECT GRID
+
+            FUNCTIONALITY UNCHANGED
+            CARD COMPONENT UNCHANGED
+        ===================================================== */}
+
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project, i) => (
+          {projects.map((project, index) => (
             <ProjectCard
               key={project.id}
-              index={i + 1}
+              index={index + 1}
               category={project.category}
               title={project.title}
               tagline={project.tagline}
-              image={project.image}
-              imageAlt={project.imageAlt}
               status={project.status}
-              onClick={() => setSelectedProject(project.id)}
+              specs={project.specs}
+              metric={project.metric}
+              visual={project.visual}
+              onClick={() => {
+                setSelectedProject(project.id);
+              }}
             />
           ))}
         </div>
       </div>
 
+      {/* =====================================================
+          PROJECT DETAILS
+
+          FUNCTIONALITY UNCHANGED
+      ===================================================== */}
+
       {selectedProject === "livmetro" && (
-        <LivmetroDetails onClose={() => setSelectedProject(null)} />
+        <LivmetroDetails
+          onClose={() => {
+            setSelectedProject(null);
+          }}
+        />
       )}
 
+      {selectedProject === "market-intelligence" && (
+        <MarketIntelligenceDetails
+          onClose={() => {
+            setSelectedProject(null);
+          }}
+        />
+      )}
+
+      {selectedProject === "interview-ai" && (
+        <InterviewAIDetails
+          onClose={() => {
+            setSelectedProject(null);
+          }}
+        />
+      )}
+
+      {/* =====================================================
+          SECTION MOTION
+      ===================================================== */}
+
       <style jsx>{`
-        .orb-teal {
-          animation: drift1 18s ease-in-out infinite;
+        .projects-header {
+          opacity: 0;
+          transform: translate3d(0, 14px, 0);
+          animation: projectsHeaderReveal 700ms
+            cubic-bezier(.22, 1, .36, 1) forwards;
         }
-        .orb-grey {
-          animation: drift2 22s ease-in-out infinite;
+
+        .projects-eyebrow {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+
+          font-size: 10px;
+          font-weight: 500;
+          letter-spacing: 0.28em;
+          text-transform: uppercase;
+
+          color: #2dd4bf;
         }
-        @keyframes drift1 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          50% { transform: translate(60px, -40px) scale(1.1); }
+
+        .projects-heading {
+          margin: 0;
+
+          font-size: clamp(2.35rem, 5vw, 4rem);
+          font-weight: 500;
+          line-height: 1.02;
+          letter-spacing: -0.045em;
+
+          color: #f5f6f7;
         }
-        @keyframes drift2 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          50% { transform: translate(-50px, 40px) scale(1.08); }
+
+        .projects-heading span {
+          color: #2dd4bf;
         }
+
+        .projects-divider {
+          height: 1px;
+          width: 80px;
+
+          background: linear-gradient(
+            90deg,
+            rgba(45, 212, 191, 0.8),
+            transparent
+          );
+
+          box-shadow: 0 0 12px rgba(45, 212, 191, 0.18);
+        }
+
+        .projects-glow-primary {
+          animation: projectsDriftPrimary 18s ease-in-out infinite;
+        }
+
+        .projects-glow-secondary {
+          animation: projectsDriftSecondary 22s ease-in-out infinite;
+        }
+
+        @keyframes projectsHeaderReveal {
+          from {
+            opacity: 0;
+            transform: translate3d(0, 14px, 0);
+          }
+
+          to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+          }
+        }
+
+        @keyframes projectsDriftPrimary {
+          0%,
+          100% {
+            transform: translate3d(0, 0, 0) scale(1);
+          }
+
+          50% {
+            transform: translate3d(45px, -30px, 0) scale(1.07);
+          }
+        }
+
+        @keyframes projectsDriftSecondary {
+          0%,
+          100% {
+            transform: translate3d(0, 0, 0) scale(1);
+          }
+
+          50% {
+            transform: translate3d(-40px, 30px, 0) scale(1.06);
+          }
+        }
+
+        @media (max-width: 640px) {
+          .projects-heading {
+            font-size: clamp(2.15rem, 10.5vw, 3.35rem);
+            line-height: 0.98;
+          }
+
+          .projects-eyebrow {
+            font-size: 9px;
+            letter-spacing: 0.24em;
+          }
+
+          .projects-divider {
+            margin-top: 26px;
+          }
+        }
+
         @media (prefers-reduced-motion: reduce) {
-          .orb-teal, .orb-grey { animation: none; }
+          .projects-header,
+          .projects-glow-primary,
+          .projects-glow-secondary {
+            animation: none !important;
+          }
+
+          .projects-header {
+            opacity: 1;
+            transform: none;
+          }
         }
       `}</style>
     </section>

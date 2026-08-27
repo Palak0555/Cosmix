@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Logo from "./Logo";
 
 const services = [
   {
@@ -40,6 +39,8 @@ const services = [
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
 
   useEffect(() => {
     const updateHeight = () => {
@@ -73,12 +74,16 @@ export default function Nav() {
     const handleEscape = (event) => {
       if (event.key === "Escape") {
         setServicesOpen(false);
+        setMobileOpen(false);
+        setMobileServicesOpen(false);
       }
     };
 
     const handleOutsideClick = (event) => {
       if (!event.target.closest(".cosmix-nav")) {
         setServicesOpen(false);
+        setMobileOpen(false);
+        setMobileServicesOpen(false);
       }
     };
 
@@ -93,6 +98,8 @@ export default function Nav() {
 
   const closeServices = () => {
     setServicesOpen(false);
+    setMobileOpen(false);
+    setMobileServicesOpen(false);
   };
 
   return (
@@ -104,14 +111,27 @@ export default function Nav() {
       >
         <div className="cosmix-nav-inner">
 
-          {/* LOGO */}
+          {/* =====================================================
+              LOGO
+          ===================================================== */}
 
-          <div className="cosmix-logo">
-            <Logo />
-          </div>
+          <a
+            href="/"
+            className="cosmix-logo"
+            aria-label="Cosmix Home"
+            onClick={closeServices}
+          >
+            <img
+              src="/images/Cosmix.png"
+              alt="Cosmix"
+              className="cosmix-logo-image"
+            />
+          </a>
 
 
-          {/* MAIN NAVIGATION */}
+          {/* =====================================================
+              MAIN NAVIGATION
+          ===================================================== */}
 
           <div className="cosmix-links">
 
@@ -125,6 +145,7 @@ export default function Nav() {
                 setServicesOpen((current) => !current);
               }}
               aria-expanded={servicesOpen}
+              aria-haspopup="true"
             >
               <span>Services</span>
 
@@ -159,6 +180,14 @@ export default function Nav() {
 
 
             <a
+              href="/founder"
+              onClick={closeServices}
+            >
+              Founder
+            </a>
+
+
+            <a
               href="#contact"
               onClick={closeServices}
             >
@@ -168,7 +197,9 @@ export default function Nav() {
           </div>
 
 
-          {/* CTA */}
+          {/* =====================================================
+              CTA
+          ===================================================== */}
 
           <a
             href="#contact"
@@ -182,9 +213,196 @@ export default function Nav() {
         </div>
 
 
-        {/* =========================================
+        {/* =====================================================
+            MOBILE TOGGLE
+        ===================================================== */}
+
+        <button
+          type="button"
+          className={`cosmix-mobile-toggle ${
+            mobileOpen ? "active" : ""
+          }`}
+          onClick={(event) => {
+            event.stopPropagation();
+
+            setMobileOpen((current) => !current);
+            setServicesOpen(false);
+            setMobileServicesOpen(false);
+          }}
+          aria-label={
+            mobileOpen ? "Close menu" : "Open menu"
+          }
+          aria-expanded={mobileOpen}
+        >
+          <span />
+          <span />
+        </button>
+
+
+        {/* =====================================================
+            MOBILE MENU
+        ===================================================== */}
+
+        <div
+          className={`cosmix-mobile-menu ${
+            mobileOpen ? "show" : ""
+          }`}
+        >
+          <div className="cosmix-mobile-menu-inner">
+
+            <div className="mobile-menu-kicker">
+              COSMIX / NAVIGATION
+            </div>
+
+
+            <div className="mobile-menu-links">
+
+              {/* SERVICES */}
+
+              <button
+                type="button"
+                className={`mobile-services-trigger ${
+                  mobileServicesOpen ? "active" : ""
+                }`}
+                onClick={() =>
+                  setMobileServicesOpen((current) => !current)
+                }
+              >
+                <span>
+                  <small>01</small>
+                  Services
+                </span>
+
+                <b>
+                  {mobileServicesOpen ? "↑" : "↓"}
+                </b>
+              </button>
+
+
+              {/* MOBILE SERVICES */}
+
+              <div
+                className={`mobile-services-list ${
+                  mobileServicesOpen ? "show" : ""
+                }`}
+              >
+                <div className="mobile-services-list-inner">
+
+                  {services.map((service) => (
+                    <a
+                      key={service.title}
+                      href="#services"
+                      onClick={closeServices}
+                    >
+                      <span>{service.number}</span>
+
+                      <strong>
+                        {service.title}
+                      </strong>
+
+                      <b>↗</b>
+                    </a>
+                  ))}
+
+                </div>
+              </div>
+
+
+              {/* WORK */}
+
+              <a
+                href="#projects"
+                onClick={closeServices}
+              >
+                <span>
+                  <small>02</small>
+                  Work
+                </span>
+
+                <b>↗</b>
+              </a>
+
+
+              {/* PROCESS */}
+
+              <a
+                href="#process"
+                onClick={closeServices}
+              >
+                <span>
+                  <small>03</small>
+                  Process
+                </span>
+
+                <b>↗</b>
+              </a>
+
+
+              {/* ABOUT */}
+
+              <a
+                href="#about"
+                onClick={closeServices}
+              >
+                <span>
+                  <small>04</small>
+                  About
+                </span>
+
+                <b>↗</b>
+              </a>
+
+
+              {/* FOUNDER */}
+
+              <a
+                href="/founder"
+                onClick={closeServices}
+              >
+                <span>
+                  <small>05</small>
+                  Founder
+                </span>
+
+                <b>↗</b>
+              </a>
+
+
+              {/* CONTACT */}
+
+              <a
+                href="#contact"
+                onClick={closeServices}
+              >
+                <span>
+                  <small>06</small>
+                  Contact
+                </span>
+
+                <b>↗</b>
+              </a>
+
+            </div>
+
+
+            {/* MOBILE CTA */}
+
+            <a
+              href="#contact"
+              className="mobile-menu-cta"
+              onClick={closeServices}
+            >
+              <span>Start a project</span>
+              <b>↗</b>
+            </a>
+
+          </div>
+        </div>
+
+
+        {/* =====================================================
             SERVICES DROPDOWN
-        ========================================= */}
+        ===================================================== */}
 
         <div
           className={`services-dropdown ${
@@ -194,12 +412,18 @@ export default function Nav() {
 
           <div className="services-card">
 
+            {/* TEAL GLOW */}
+
             <div className="services-card-glow" />
+
+            <div className="services-card-glow-2" />
 
 
             <div className="services-grid">
 
-              {/* LEFT SIDE */}
+              {/* =================================================
+                  LEFT
+              ================================================= */}
 
               <div className="services-intro">
 
@@ -207,11 +431,13 @@ export default function Nav() {
                   COSMIX / SERVICES
                 </span>
 
+
                 <h2>
                   What we
                   <br />
                   <span>build.</span>
                 </h2>
+
 
                 <p>
                   Digital products, intelligent systems
@@ -219,19 +445,23 @@ export default function Nav() {
                   way your business actually works.
                 </p>
 
+
                 <a
                   href="#services"
                   onClick={closeServices}
                   className="services-view-all"
                 >
                   Explore all services
+
                   <span>↗</span>
                 </a>
 
               </div>
 
 
-              {/* RIGHT SIDE */}
+              {/* =================================================
+                  RIGHT
+              ================================================= */}
 
               <div className="services-list">
 
@@ -250,6 +480,7 @@ export default function Nav() {
                       {service.number}
                     </span>
 
+
                     <div className="service-copy">
 
                       <strong>
@@ -261,6 +492,7 @@ export default function Nav() {
                       </span>
 
                     </div>
+
 
                     <span className="service-item-arrow">
                       ↗
@@ -274,7 +506,9 @@ export default function Nav() {
             </div>
 
 
-            {/* DROPDOWN FOOTER */}
+            {/* =================================================
+                DROPDOWN FOOTER
+            ================================================= */}
 
             <div className="services-bottom">
 
@@ -296,6 +530,7 @@ export default function Nav() {
 
               </div>
 
+
               <span className="services-status">
                 <b />
                 BUILDING FORWARD
@@ -309,6 +544,10 @@ export default function Nav() {
 
       </nav>
 
+
+      {/* =======================================================
+          STYLES
+      ======================================================= */}
 
       <style jsx>{`
 
@@ -370,7 +609,9 @@ export default function Nav() {
           margin: 0 auto;
 
           display: flex;
+
           align-items: center;
+
           justify-content: space-between;
         }
 
@@ -385,7 +626,46 @@ export default function Nav() {
           z-index: 1001;
 
           display: flex;
+
           align-items: center;
+
+          width: fit-content;
+
+          text-decoration: none;
+        }
+
+
+        .cosmix-logo-image {
+          display: block;
+
+          width: 118px;
+
+          height: auto;
+
+          object-fit: contain;
+
+          filter:
+            drop-shadow(
+              0 0 14px
+              rgba(0,194,178,.08)
+            );
+
+          transition:
+            transform .25s ease,
+            filter .25s ease;
+        }
+
+
+        .cosmix-logo:hover
+        .cosmix-logo-image {
+          transform:
+            translateY(-1px);
+
+          filter:
+            drop-shadow(
+              0 0 18px
+              rgba(0,194,178,.16)
+            );
         }
 
 
@@ -402,6 +682,7 @@ export default function Nav() {
             translateX(-50%);
 
           display: flex;
+
           align-items: center;
 
           gap: 3px;
@@ -415,6 +696,7 @@ export default function Nav() {
           appearance: none;
 
           border: 0;
+
           outline: none;
 
           background: transparent;
@@ -450,6 +732,7 @@ export default function Nav() {
           cursor: pointer;
 
           display: inline-flex;
+
           align-items: center;
 
           gap: 7px;
@@ -483,6 +766,7 @@ export default function Nav() {
           display: inline-flex;
 
           align-items: center;
+
           justify-content: center;
 
           width: 15px;
@@ -502,6 +786,7 @@ export default function Nav() {
             );
 
           transition:
+            color .25s ease,
             transform .25s ease;
         }
 
@@ -522,6 +807,7 @@ export default function Nav() {
           z-index: 1001;
 
           display: inline-flex;
+
           align-items: center;
 
           gap: 10px;
@@ -578,18 +864,18 @@ export default function Nav() {
 
           background:
             rgba(
-              255,
-              255,
-              255,
-              .08
+              0,
+              194,
+              178,
+              .09
             );
 
           border-color:
             rgba(
-              255,
-              255,
-              255,
-              .28
+              0,
+              194,
+              178,
+              .32
             );
         }
 
@@ -622,6 +908,7 @@ export default function Nav() {
           top: 100%;
 
           left: 0;
+
           right: 0;
 
           padding:
@@ -669,7 +956,7 @@ export default function Nav() {
 
 
         /* =====================================================
-           DROPDOWN CARD
+           SERVICES CARD
         ===================================================== */
 
         .services-card {
@@ -688,20 +975,20 @@ export default function Nav() {
           border:
             1px solid
             rgba(
-              255,
-              255,
-              255,
-              .12
+              0,
+              194,
+              178,
+              .22
             );
 
           border-radius: 18px;
 
           background:
             rgba(
-              8,
-              9,
-              11,
-              .96
+              7,
+              12,
+              12,
+              .97
             );
 
           box-shadow:
@@ -711,6 +998,13 @@ export default function Nav() {
               0,
               0,
               .6
+            ),
+            0 0 60px
+            rgba(
+              0,
+              194,
+              178,
+              .06
             );
 
           backdrop-filter:
@@ -722,31 +1016,111 @@ export default function Nav() {
 
 
         /* =====================================================
-           GLOW
+           TEAL GLOW
         ===================================================== */
 
         .services-card-glow {
           position: absolute;
 
-          width: 430px;
-          height: 280px;
+          width: 520px;
 
-          top: -170px;
-          left: -130px;
+          height: 340px;
+
+          top: -180px;
+
+          left: -100px;
 
           border-radius: 50%;
 
           background:
-            rgba(
-              0,
-              194,
-              178,
-              .065
+            radial-gradient(
+              circle,
+              rgba(
+                0,
+                194,
+                178,
+                .22
+              ) 0%,
+              rgba(
+                0,
+                194,
+                178,
+                .08
+              ) 38%,
+              transparent 72%
             );
 
-          filter: blur(80px);
+          filter:
+            blur(70px);
 
           pointer-events: none;
+
+          animation:
+            servicesGlow 6s
+            ease-in-out
+            infinite;
+        }
+
+
+        .services-card-glow-2 {
+          position: absolute;
+
+          width: 420px;
+
+          height: 260px;
+
+          right: -150px;
+
+          bottom: -180px;
+
+          border-radius: 50%;
+
+          background:
+            radial-gradient(
+              circle,
+              rgba(
+                0,
+                194,
+                178,
+                .12
+              ),
+              transparent 70%
+            );
+
+          filter:
+            blur(80px);
+
+          pointer-events: none;
+        }
+
+
+        @keyframes servicesGlow {
+
+          0%,
+          100% {
+            opacity: .7;
+
+            transform:
+              translate3d(
+                0,
+                0,
+                0
+              )
+              scale(1);
+          }
+
+          50% {
+            opacity: 1;
+
+            transform:
+              translate3d(
+                35px,
+                18px,
+                0
+              )
+              scale(1.08);
+          }
+
         }
 
 
@@ -756,6 +1130,8 @@ export default function Nav() {
 
         .services-grid {
           position: relative;
+
+          z-index: 1;
 
           display: grid;
 
@@ -833,12 +1209,7 @@ export default function Nav() {
 
         .services-intro h2 span {
           color:
-            rgba(
-              245,
-              245,
-              247,
-              .3
-            );
+            #00c2b2;
         }
 
 
@@ -864,7 +1235,7 @@ export default function Nav() {
               245,
               245,
               247,
-              .56
+              .68
             );
         }
 
@@ -873,6 +1244,7 @@ export default function Nav() {
           width: fit-content;
 
           display: inline-flex;
+
           align-items: center;
 
           gap: 9px;
@@ -889,10 +1261,20 @@ export default function Nav() {
           font-weight: 600;
 
           text-decoration: none;
+
+          transition:
+            color .25s ease;
+        }
+
+
+        .services-view-all:hover {
+          color: #00c2b2;
         }
 
 
         .services-view-all span {
+          color: #00c2b2;
+
           transition:
             transform .25s ease;
         }
@@ -912,6 +1294,8 @@ export default function Nav() {
         ===================================================== */
 
         .services-list {
+          position: relative;
+
           border-top:
             1px solid
             rgba(
@@ -972,7 +1356,8 @@ export default function Nav() {
               )
               var(--delay),
             background .25s ease,
-            padding .25s ease;
+            padding .25s ease,
+            border-color .25s ease;
         }
 
 
@@ -985,20 +1370,70 @@ export default function Nav() {
         }
 
 
+        .service-item::before {
+          content: "";
+
+          position: absolute;
+
+          left: 0;
+
+          top: 50%;
+
+          width: 2px;
+
+          height: 0;
+
+          transform:
+            translateY(-50%);
+
+          border-radius: 999px;
+
+          background:
+            #00c2b2;
+
+          box-shadow:
+            0 0 12px
+            rgba(
+              0,
+              194,
+              178,
+              .7
+            );
+
+          transition:
+            height .25s ease;
+        }
+
+
         .service-item:hover {
           padding-left: 13px;
 
           background:
             rgba(
-              255,
-              255,
-              255,
-              .035
+              0,
+              194,
+              178,
+              .045
+            );
+
+          border-color:
+            rgba(
+              0,
+              194,
+              178,
+              .16
             );
         }
 
 
-        /* NUMBER */
+        .service-item:hover::before {
+          height: 32px;
+        }
+
+
+        /* =====================================================
+           NUMBER
+        ===================================================== */
 
         .service-number {
           font-family:
@@ -1009,15 +1444,17 @@ export default function Nav() {
 
           color:
             rgba(
-              245,
-              245,
-              247,
-              .3
+              0,
+              194,
+              178,
+              .55
             );
         }
 
 
-        /* COPY */
+        /* =====================================================
+           COPY
+        ===================================================== */
 
         .service-copy {
           display: flex;
@@ -1060,20 +1497,22 @@ export default function Nav() {
               245,
               245,
               247,
-              .5
+              .58
             );
         }
 
 
-        /* ARROW */
+        /* =====================================================
+           ARROW
+        ===================================================== */
 
         .service-item-arrow {
           color:
             rgba(
-              245,
-              245,
-              247,
-              .3
+              0,
+              194,
+              178,
+              .45
             );
 
           transition:
@@ -1100,6 +1539,10 @@ export default function Nav() {
         ===================================================== */
 
         .services-bottom {
+          position: relative;
+
+          z-index: 1;
+
           display: flex;
 
           align-items: center;
@@ -1134,7 +1577,7 @@ export default function Nav() {
               245,
               245,
               247,
-              .25
+              .3
             );
         }
 
@@ -1150,6 +1593,7 @@ export default function Nav() {
 
         .services-system i {
           width: 3px;
+
           height: 3px;
 
           border-radius: 50%;
@@ -1160,6 +1604,15 @@ export default function Nav() {
               194,
               178,
               .75
+            );
+
+          box-shadow:
+            0 0 5px
+            rgba(
+              0,
+              194,
+              178,
+              .5
             );
         }
 
@@ -1176,13 +1629,14 @@ export default function Nav() {
               0,
               194,
               178,
-              .65
+              .75
             );
         }
 
 
         .services-status b {
           width: 5px;
+
           height: 5px;
 
           border-radius: 50%;
@@ -1202,6 +1656,435 @@ export default function Nav() {
 
 
         /* =====================================================
+           MOBILE TOGGLE
+        ===================================================== */
+
+        .cosmix-mobile-toggle {
+          display: none;
+
+          position: relative;
+
+          z-index: 1002;
+
+          width: 42px;
+
+          height: 42px;
+
+          padding: 0;
+
+          border:
+            1px solid
+            rgba(
+              0,
+              194,
+              178,
+              .24
+            );
+
+          border-radius: 11px;
+
+          background:
+            rgba(
+              255,
+              255,
+              255,
+              .035
+            );
+
+          cursor: pointer;
+        }
+
+
+        .cosmix-mobile-toggle span {
+          position: absolute;
+
+          left: 12px;
+
+          width: 17px;
+
+          height: 1px;
+
+          background:
+            #00c2b2;
+
+          transition:
+            transform .3s ease,
+            top .3s ease;
+        }
+
+
+        .cosmix-mobile-toggle span:first-child {
+          top: 16px;
+        }
+
+
+        .cosmix-mobile-toggle span:last-child {
+          top: 23px;
+        }
+
+
+        .cosmix-mobile-toggle.active
+        span:first-child {
+          top: 20px;
+
+          transform:
+            rotate(45deg);
+        }
+
+
+        .cosmix-mobile-toggle.active
+        span:last-child {
+          top: 20px;
+
+          transform:
+            rotate(-45deg);
+        }
+
+
+        /* =====================================================
+           MOBILE MENU
+        ===================================================== */
+
+        .cosmix-mobile-menu {
+          display: none;
+        }
+
+
+        .mobile-menu-kicker {
+          margin-bottom: 18px;
+
+          font-family:
+            "IBM Plex Mono",
+            monospace;
+
+          font-size: 8px;
+
+          letter-spacing:
+            .18em;
+
+          color:
+            rgba(
+              0,
+              194,
+              178,
+              .62
+            );
+        }
+
+
+        .mobile-menu-links {
+          display: flex;
+
+          flex-direction: column;
+        }
+
+
+        .mobile-menu-links > a,
+        .mobile-services-trigger {
+          appearance: none;
+
+          width: 100%;
+
+          display: flex;
+
+          align-items: center;
+
+          justify-content: space-between;
+
+          gap: 16px;
+
+          padding:
+            16px
+            0;
+
+          border: 0;
+
+          border-bottom:
+            1px solid
+            rgba(
+              255,
+              255,
+              255,
+              .08
+            );
+
+          background: transparent;
+
+          color: #f5f5f7;
+
+          text-decoration: none;
+
+          font-family:
+            "Space Grotesk",
+            "Inter",
+            sans-serif;
+
+          font-size: 28px;
+
+          line-height: 1;
+
+          letter-spacing:
+            -.045em;
+
+          text-align: left;
+
+          cursor: pointer;
+        }
+
+
+        .mobile-menu-links > a span,
+        .mobile-services-trigger span {
+          display: flex;
+
+          align-items: center;
+
+          gap: 16px;
+        }
+
+
+        .mobile-menu-links small {
+          width: 24px;
+
+          color:
+            rgba(
+              245,
+              245,
+              247,
+              .28
+            );
+
+          font-family:
+            "IBM Plex Mono",
+            monospace;
+
+          font-size: 8px;
+
+          letter-spacing:
+            .05em;
+        }
+
+
+        .mobile-menu-links > a b,
+        .mobile-services-trigger b {
+          color:
+            #00c2b2;
+
+          font-family:
+            "IBM Plex Mono",
+            monospace;
+
+          font-size: 12px;
+
+          font-weight: 400;
+        }
+
+
+        .mobile-services-trigger.active {
+          color:
+            #00c2b2;
+        }
+
+
+        /* =====================================================
+           MOBILE SERVICES
+        ===================================================== */
+
+        .mobile-services-list {
+          display: grid;
+
+          grid-template-rows: 0fr;
+
+          opacity: 0;
+
+          overflow: hidden;
+
+          transition:
+            grid-template-rows .4s
+              cubic-bezier(
+                .22,
+                1,
+                .36,
+                1
+              ),
+            opacity .25s ease;
+        }
+
+
+        .mobile-services-list.show {
+          grid-template-rows: 1fr;
+
+          opacity: 1;
+        }
+
+
+        .mobile-services-list-inner {
+          min-height: 0;
+
+          overflow: hidden;
+        }
+
+
+        .mobile-services-list a {
+          min-height: 0;
+
+          display: grid;
+
+          grid-template-columns:
+            28px
+            1fr
+            18px;
+
+          align-items: center;
+
+          gap: 10px;
+
+          padding:
+            9px
+            4px
+            9px
+            40px;
+
+          border-bottom:
+            1px solid
+            rgba(
+              255,
+              255,
+              255,
+              .045
+            );
+
+          color:
+            rgba(
+              245,
+              245,
+              247,
+              .62
+            );
+
+          text-decoration: none;
+
+          font-family:
+            "Inter",
+            Arial,
+            sans-serif;
+
+          font-size: 11px;
+        }
+
+
+        .mobile-services-list span {
+          color:
+            rgba(
+              0,
+              194,
+              178,
+              .55
+            );
+
+          font-family:
+            "IBM Plex Mono",
+            monospace;
+
+          font-size: 8px;
+        }
+
+
+        .mobile-services-list strong {
+          font-weight: 500;
+
+          color:
+            rgba(
+              245,
+              245,
+              247,
+              .78
+            );
+        }
+
+
+        .mobile-services-list b {
+          color:
+            rgba(
+              0,
+              194,
+              178,
+              .72
+            );
+
+          font-weight: 400;
+        }
+
+
+        /* =====================================================
+           MOBILE CTA
+        ===================================================== */
+
+        .mobile-menu-cta {
+          margin-top: auto;
+
+          display: flex;
+
+          align-items: center;
+
+          justify-content: space-between;
+
+          padding:
+            15px
+            17px;
+
+          border:
+            1px solid
+            rgba(
+              0,
+              194,
+              178,
+              .24
+            );
+
+          border-radius: 10px;
+
+          background:
+            rgba(
+              0,
+              194,
+              178,
+              .09
+            );
+
+          color:
+            #ecfffa;
+
+          text-decoration: none;
+
+          font-family:
+            "Inter",
+            Arial,
+            sans-serif;
+
+          font-size: 12px;
+
+          font-weight: 600;
+
+          box-shadow:
+            0 0 25px
+            rgba(
+              0,
+              194,
+              178,
+              .05
+            );
+        }
+
+
+        .mobile-menu-cta b {
+          color:
+            #00c2b2;
+
+          font-weight: 400;
+        }
+
+
+        /* =====================================================
            TABLET
         ===================================================== */
 
@@ -1217,6 +2100,109 @@ export default function Nav() {
 
           .cosmix-links {
             display: none;
+          }
+
+
+          .cosmix-mobile-toggle {
+            display: block;
+          }
+
+
+          .cosmix-mobile-menu {
+            position: absolute;
+
+            top: 100%;
+
+            left: 0;
+
+            right: 0;
+
+            height:
+              calc(
+                100vh - 82px
+              );
+
+            padding:
+              18px
+              24px
+              24px;
+
+            display: block;
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            pointer-events: none;
+
+            transform:
+              translateY(-12px);
+
+            background:
+              linear-gradient(
+                180deg,
+                rgba(
+                  2,
+                  3,
+                  4,
+                  .98
+                ) 0%,
+                rgba(
+                  3,
+                  8,
+                  7,
+                  .98
+                ) 60%,
+                rgba(
+                  5,
+                  18,
+                  15,
+                  .99
+                ) 100%
+              );
+
+            border-top:
+              1px solid
+              rgba(
+                255,
+                255,
+                255,
+                .06
+              );
+
+            transition:
+              opacity .3s ease,
+              transform .4s
+                cubic-bezier(
+                  .22,
+                  1,
+                  .36,
+                  1
+                ),
+              visibility .3s ease;
+
+            overflow-y: auto;
+          }
+
+
+          .cosmix-mobile-menu.show {
+            opacity: 1;
+
+            visibility: visible;
+
+            pointer-events: auto;
+
+            transform:
+              translateY(0);
+          }
+
+
+          .cosmix-mobile-menu-inner {
+            min-height: 100%;
+
+            display: flex;
+
+            flex-direction: column;
           }
 
 
@@ -1265,28 +2251,47 @@ export default function Nav() {
           }
 
 
-          .cosmix-nav-cta {
-            width: 40px;
-            height: 40px;
-
-            padding: 0;
-
-            justify-content: center;
-
-            border-radius: 10px;
+          .cosmix-logo-image {
+            width: 100px;
           }
 
 
-          .cosmix-nav-cta
-          span:first-child {
+          .cosmix-nav-cta {
             display: none;
           }
 
 
-          .services-dropdown {
+          .cosmix-mobile-toggle {
+            width: 40px;
+
+            height: 40px;
+          }
+
+
+          .cosmix-mobile-menu {
+            height:
+              calc(
+                100vh - 72px
+              );
+
             padding:
-              7px;
-            }
+              18px
+              20px
+              22px;
+          }
+
+
+          .mobile-menu-links > a,
+          .mobile-services-trigger {
+            font-size: 25px;
+
+            padding:
+              15px 0;
+          }
+
+
+          .services-dropdown {
+            padding: 7px;
           }
 
 
@@ -1355,12 +2360,17 @@ export default function Nav() {
           .services-dropdown,
           .service-item,
           .cosmix-nav-cta,
-          .service-item-arrow {
+          .service-item-arrow,
+          .services-card-glow {
             transition: none;
+
+            animation: none;
           }
+
 
           .service-item {
             opacity: 1;
+
             transform: none;
           }
 
